@@ -1,18 +1,20 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
-import AuthDemo from "./AuthDemo";
+
 
 export default async function HomePage() {
   const session = await getServerSession(authOptions);
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-2xl font-bold mb-4">NextAuth v7 Demo</h1>
-      <AuthDemo />
-      {session?.user?.role === "admin" && (
-        <div className="mt-4 p-4 bg-green-100 border rounded">
-          <b>Admin sekcija:</b> Samo admin vidi ovu poruku!
-        </div>
-      )}
-    </main>
-  );
+
+      <main className="flex flex-col items-center justify-center min-h-screen">
+        <h1 className="text-2xl font-bold mb-4">NextAuth v7 Demo {session?.user?.email}</h1>
+
+        {session?.user?.role === "admin" && (
+          <div className="mt-4 p-4 bg-green-100 border rounded">
+            <b>Admin sekcija:</b> Samo admin vidi ovu poruku!
+          </div>
+        )}
+      </main>
+    );
+
 }

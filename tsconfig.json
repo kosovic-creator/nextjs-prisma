@@ -18,8 +18,14 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./*"
+      ],
+      "@actions/*": [
+        "actions/*"
+      ]
     }
   },
   "include": [
@@ -30,11 +36,7 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules"],
-   "paths": {
-      "@actions/*": ["actions/*"],
-      // "@auth/*": ["packages/auth/*"],
-      // "@auth/auth/*": ["packages/auth/dist/auth/*"]
-
-}
+  "exclude": [
+    "node_modules"
+  ]
 }
