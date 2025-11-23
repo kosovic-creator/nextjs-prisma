@@ -1,19 +1,18 @@
-import prisma from '@/lib/prisma'
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
+import AuthDemo from "./AuthDemo";
 
-export default async function Home() {
-  const users = await prisma.user.findMany();
+export default async function HomePage() {
+  const session = await getServerSession(authOptions);
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center -mt-16">
-      <h1 className="text-4xl font-bold mb-8 font-[family-name:var(--font-geist-sans)] text-[#333333]">
-        Superblog
-      </h1>
-      <ol className="list-decimal list-inside font-[family-name:var(--font-geist-sans)]">
-        {users.map((user) => (
-          <li key={user.id} className="mb-2">
-            {user.name}
-          </li>
-        ))}
-      </ol>
-    </div>
+    <main className="flex flex-col items-center justify-center min-h-screen">
+      <h1 className="text-2xl font-bold mb-4">NextAuth v7 Demo</h1>
+      <AuthDemo />
+      {session?.user?.role === "admin" && (
+        <div className="mt-4 p-4 bg-green-100 border rounded">
+          <b>Admin sekcija:</b> Samo admin vidi ovu poruku!
+        </div>
+      )}
+    </main>
   );
 }
