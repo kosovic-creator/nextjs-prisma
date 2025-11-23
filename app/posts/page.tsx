@@ -1,12 +1,8 @@
-import prisma from "@/lib/prisma";
 import ClientPost from "./ClientPost";
+import { getAllPosts } from "@/actions/post/post";
 
-export default async function Posts() {
-  const posts = await prisma.post.findMany({
-    include: {
-      author: true,
-    },
-  });
+export default async function PostPage() {
+  const posts = await getAllPosts();
 
   return (
    <>
