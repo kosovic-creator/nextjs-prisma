@@ -1,4 +1,6 @@
 import prisma from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function getAllPosts() {
     const posts = await prisma.post.findMany({
@@ -15,4 +17,32 @@ export async function getPostById(id: number) {
         where: { id },
     });
     return post;
+}
+
+// export async function DELETE(id: number) {
+//     await prisma.post.delete({
+//         where: { id },
+//     });
+// }
+
+export async function updatePostById(id: number, title: string, content: string) {
+    await prisma.post.update({
+        where: { id },
+        data: { title, content },
+    });
+}
+
+export async function createPost(title: string, content: string, authorId: number) {
+    const post = await prisma.post.create({
+        data: {
+            title,
+            content,
+            authorId,
+        },
+
+    });
+    revalidatePath("/posts");
+    redirect("/posts");
+    return post;
+
 }

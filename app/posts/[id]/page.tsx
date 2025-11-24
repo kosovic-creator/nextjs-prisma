@@ -10,6 +10,7 @@ export default async function Post(props: any) {
   const id = Number(params.id);
   if (isNaN(id)) notFound();
   const post = await getPostById(id);
+  console.log("Post iz baze:", post);
   if (!post) {
     notFound();
   }
