@@ -19,11 +19,7 @@ export async function getPostById(id: number) {
     return post;
 }
 
-// export async function DELETE(id: number) {
-//     await prisma.post.delete({
-//         where: { id },
-//     });
-// }
+
 
 export async function updatePostById(id: number, title: string, content: string) {
     await prisma.post.update({
