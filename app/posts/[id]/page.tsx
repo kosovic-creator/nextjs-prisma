@@ -15,7 +15,7 @@ export default async function Post(props: any) {
   }
   return (
     <>
-      <ClientPostId post={post} id={id} />
+      <ClientPostId post={post}  />
     </>
   );
 }
