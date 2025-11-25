@@ -19,8 +19,6 @@ export async function getPostById(id: number) {
     return post;
 }
 
-
-
 export async function updatePostById(id: number, title: string, content: string) {
     await prisma.post.update({
         where: { id },
@@ -52,4 +50,26 @@ export async function deletePostById(id: number) {
     });
     revalidatePath("/posts");
     redirect("/posts");
+}
+
+
+
+export async function serverActionTransaction() {
+  const result = await prisma.$transaction(async (prismaTxn) => {
+    const user = await prismaTxn.user.create({
+      data: { name: 'Marko', email: 'marko1@example.com' },
+    });
+
+    const post = await prismaTxn.post.create({
+      data: {
+        title: 'Novi post',
+        content: 'Ovo je sadržaj posta',
+        authorId: user.id,
+      },
+    });
+
+    return { user, post };
+  });
+
+  return result;
 }
