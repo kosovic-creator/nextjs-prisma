@@ -3,9 +3,7 @@ import { notFound } from "next/navigation";
 
 export default async function UpdatePostPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
-  console.log('UpdatePostPage params:', resolvedParams);
   const id = Number(resolvedParams?.id);
-  console.log('UpdatePostPage id:', id);
   if (!resolvedParams?.id || isNaN(id)) notFound();
   const post = await getPostById(id);
   if (!post) notFound();

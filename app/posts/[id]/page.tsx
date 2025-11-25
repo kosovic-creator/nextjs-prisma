@@ -3,8 +3,8 @@ import { getPostById, updatePostById, deletePostById } from "@/actions/post";
 import { notFound } from "next/navigation";
 
 
-export default async function Post(props: any) {
-  const params = await props.params;
+export default async function Post({ params }: { params: { id: string } }) {
+  params=await params;
   const id = Number(params.id);
   if (isNaN(id)) notFound();
   const post = await getPostById(id);
