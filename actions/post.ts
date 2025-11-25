@@ -26,6 +26,9 @@ export async function updatePostById(id: number, title: string, content: string)
         where: { id },
         data: { title, content },
     });
+    revalidatePath("/posts");
+    redirect("/posts");
+
 }
 
 export async function createPost(title: string, content: string, authorId: number) {
@@ -41,4 +44,12 @@ export async function createPost(title: string, content: string, authorId: numbe
     redirect("/posts");
     return post;
 
+}
+
+export async function deletePostById(id: number) {
+    await prisma.post.delete({
+        where: { id },
+    });
+    revalidatePath("/posts");
+    redirect("/posts");
 }
