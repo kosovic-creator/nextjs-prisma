@@ -5,6 +5,7 @@ export default function Navbar() {
     <nav className="bg-gray-800 text-white px-4 py-3 flex justify-between items-center">
       <div className="flex gap-6 items-center">
         <Link href="/" className="font-bold text-lg">Home</Link>
+        <Link href="/posts/trans" className="hover:underline">PostsTrans</Link>
         <Link href="/posts" className="hover:underline">Posts</Link>
       </div>
       <div className="flex gap-4 items-center">
