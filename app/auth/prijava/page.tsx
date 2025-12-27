@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import { useState } from "react";
+
+import { useState, Suspense } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useSearchParams, useRouter } from "next/navigation";
 
-export default function LoginForm() {
+
+function LoginFormInner() {
   const searchParams = useSearchParams();
   const langParam = searchParams?.get('lang');
   const lang = langParam === 'sr' || langParam === 'en' ? langParam : 'en';
@@ -79,5 +81,13 @@ export default function LoginForm() {
         {error && <p className="text-red-500">{error}</p>}
       </form>
     </>
+  );
+}
+
+export default function LoginForm() {
+  return (
+    <Suspense>
+      <LoginFormInner />
+    </Suspense>
   );
 }
