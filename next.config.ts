@@ -19,7 +19,9 @@ async rewrites() {
     },
   ]
 },
-
+env: {
+  customKey: 'my-value',
+},
   /* config options here */
 };
 

@@ -11,6 +11,17 @@ export async function getAllPosts() {
     return posts;
 }
 
+export async function getAllPostsTrans() {
+    const posts = await prisma.$transaction(async (prismaTxn) => {
+        const allPosts = await prismaTxn.post.findMany({
+            include: {
+                author: true,
+            },
+        });
+        return allPosts;
+    });
+    return posts;
+}
 
 export async function getPostById(id: number) {
     const post = await prisma.post.findUnique({
