@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getPostById, updatePostById, deletePostById } from "@/actions/post";
 import { notFound } from "next/navigation";
 
