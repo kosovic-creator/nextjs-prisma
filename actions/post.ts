@@ -37,7 +37,12 @@ export async function updatePostById(id: number, title: string, content: string)
     const post = await prisma.post.findUnique({
         where: { id },
     });
-    if (!session || !session.user || !post || session.user.id !== post.authorId) {
+    if (
+        !session ||
+        !session.user ||
+        !post ||
+        Number(session.user.id) !== post.authorId
+    ) {
         forbidden(); // Baca 403 grešku
     }
 

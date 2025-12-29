@@ -10,16 +10,17 @@ export default async function UpdatePostPage({ params }: { params: Promise<{ id:
   if (!resolvedParams?.id || isNaN(id)) notFound();
   const post = await getPostById(id);
   if (!post) notFound();
-  const session = await getServerSession(authOptions);
-  if (!session || !session.user || !post || session.user.id !== post.authorId) {
-    forbidden(); // Baca 403 grešku
-  }
+  // const session = await getServerSession(authOptions);
+  // if (!session || !session.user || !post || Number(session.user.id) !== post.authorId) {
+  //   forbidden();
+  // }
 
   async function handleUpdate(formData: FormData) {
     "use server";
     // serverska funkcija koja obrađuje form podatke
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;
+    console.log("Ažuriranje posta sa ID-jem:", id, "Naslov:", title, "Sadržaj:", content);
     // koristi server akciju za ažuriranje posta na osnovu ID-a i podataka iz forme
     await updatePostById(id, title, content);
     // nakon ažuriranja, preusmeri korisnika nazad na listu postova
