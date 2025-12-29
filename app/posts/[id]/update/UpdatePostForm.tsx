@@ -1,13 +1,14 @@
 'use client';
-
+// tipizacija
 interface UpdatePostFormProps {
   post: { title: string; content?: string };
-  handleUpdate: (formData: FormData) => Promise<void>;
+  handleUpdateProp: (formData: FormData) => Promise<void>;
 }
-
-export default function UpdatePostForm({ post, handleUpdate }: UpdatePostFormProps) {
+// uvezuje prpos (podaci-post i handleUpdate kao handleUpdateProp )
+export default function UpdatePostForm({ post, handleUpdateProp }: UpdatePostFormProps) {
   return (
-    <form action={handleUpdate} className="space-y-4">
+    // klient forma koja koristi server akciju kao action
+    <form action={handleUpdateProp} className="space-y-4">
       <input name="title" defaultValue={post.title} className="border p-2 rounded w-full" />
       <textarea name="content" defaultValue={post.content ?? ""} className="border p-2 rounded w-full" />
       <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Update</button>
