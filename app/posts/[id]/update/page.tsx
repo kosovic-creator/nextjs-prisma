@@ -1,6 +1,8 @@
 import { getPostById, updatePostById } from "@/actions/post";
-import { notFound, redirect } from "next/navigation";
+import { forbidden, notFound, redirect } from "next/navigation";
 import UpdatePostForm from "./UpdatePostForm";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function UpdatePostPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
@@ -8,6 +10,10 @@ export default async function UpdatePostPage({ params }: { params: Promise<{ id:
   if (!resolvedParams?.id || isNaN(id)) notFound();
   const post = await getPostById(id);
   if (!post) notFound();
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user || !post || session.user.id !== post.authorId) {
+    forbidden(); // Baca 403 grešku
+  }
 
   async function handleUpdate(formData: FormData) {
     "use server";

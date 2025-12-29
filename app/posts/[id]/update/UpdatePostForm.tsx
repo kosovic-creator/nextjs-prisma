@@ -10,7 +10,11 @@ export default function UpdatePostForm({ post, handleUpdateProp }: UpdatePostFor
     // klient forma koja koristi server akciju kao action
     <form action={handleUpdateProp} className="space-y-4">
       <input name="title" defaultValue={post.title} className="border p-2 rounded w-full" />
-      <textarea name="content" defaultValue={post.content ?? ""} className="border p-2 rounded w-full" />
+      <textarea
+        name="content"
+        defaultValue={post.content ?? ""}
+        className="border p-2 rounded w-full"
+      ></textarea>
       <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Update</button>
     </form>
   );

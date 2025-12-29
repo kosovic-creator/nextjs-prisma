@@ -2,6 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
 
+  experimental: {
+    authInterrupts: true, // Omogućava forbidden()
+  },
+
 // async redirects() {
 //   return [
 //     {
@@ -11,6 +15,8 @@ const nextConfig: NextConfig = {
 //     },
 //   ]
 // },
+
+
 async rewrites() {
   return [
     {

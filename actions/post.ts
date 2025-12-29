@@ -1,6 +1,8 @@
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { forbidden, redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../app/api/auth/[...nextauth]/route";
 
 export async function getAllPosts() {
     const posts = await prisma.post.findMany({
@@ -31,13 +33,20 @@ export async function getPostById(id: number) {
 }
 
 export async function updatePostById(id: number, title: string, content: string) {
+    const session = await getServerSession(authOptions);
+    const post = await prisma.post.findUnique({
+        where: { id },
+    });
+    if (!session || !session.user || !post || session.user.id !== post.authorId) {
+        forbidden(); // Baca 403 grešku
+    }
+
     await prisma.post.update({
         where: { id },
         data: { title, content },
     });
     revalidatePath("/posts");
     redirect("/posts");
-
 }
 
 export async function createPost(title: string, content: string, authorId: number) {
@@ -84,3 +93,11 @@ export async function serverActionTransaction() {
 
   return result;
 }
+// async function getCurrentUserSession() {
+//     const session = await getServerSession(authOptions);
+//     if (!session) {
+//         throw new Error("User session not found.");
+//     }
+//     return session;
+// }
+
