@@ -41,7 +41,7 @@ export async function updatePostById(id: number, title: string, content: string)
         !session ||
         !session.user ||
         !post ||
-        Number(session.user.id) !== post.authorId
+        Number(session.user.id) !== post.authorId  // Provera da li je trenutni korisnik autor posta
     ) {
         forbidden(); // Baca 403 grešku
     }

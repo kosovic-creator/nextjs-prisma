@@ -1,38 +1,41 @@
-import { getPostById, updatePostById, deletePostById } from "@/actions/post";
-import { notFound } from "next/navigation";
+import { getPostById, updatePostById } from "@/actions/post";
+import UpdatePostForm from "./UpdatePostForm";
+import { notFound, redirect } from "next/navigation";
 
 
-export default async function PostId({ params }: { params: { id: string } }) {
-  params=await params;
-  const id = Number(params.id);
-  if (isNaN(id)) notFound();
+
+export default async function UpdatePostPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params;
+  const id = Number(resolvedParams?.id);
+  if (!resolvedParams?.id || isNaN(id)) notFound();
   const post = await getPostById(id);
-  if (!post) {
-    notFound();
-  }
+  if (!post) notFound();
+  // const session = await getServerSession(authOptions);
+  // if (!session || !session.user || !post || Number(session.user.id) !== post.authorId) {
+  //   forbidden();
+  // }
 
-  async function updateAction(formData: FormData) {
+  async function handleUpdate(formData: FormData) {
     "use server";
+    // serverska funkcija koja obrađuje form podatke
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;
+    console.log("Ažuriranje posta sa ID-jem:", id, "Naslov:", title, "Sadržaj:", content);
+    // koristi server akciju za ažuriranje posta na osnovu ID-a i podataka iz forme
     await updatePostById(id, title, content);
-  }
-
-  async function deleteAction() {
-    "use server";
-    await deletePostById(id);
+    // nakon ažuriranja, preusmeri korisnika nazad na listu postova
+    redirect("/posts");
   }
 
   return (
-    <>
-    <form action={updateAction} className="mt-8 space-y-4">
-      <input name="title" defaultValue={post.title} className="border p-2 rounded w-full" />
-      <textarea name="content" defaultValue={post.content ?? ""} className="border p-2 rounded w-full" />
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Update</button>
-    </form>
-    <form action={deleteAction} className="mt-4">
-      <button type="submit" className="bg-red-500 text-white px-4 py-2 rounded">Delete</button>
-    </form>
-    </>
+    <div className="max-w-2xl mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-6">Update Post</h1>
+      {/* Render the UpdatePostForm component with existing post data and the handleUpdate function */}
+      <UpdatePostForm post={{
+        title: post.title,
+        content: post.content ?? undefined
+        //šalje post podatke kao propove zajeno sa funkcijom za ažuriranje koja ide u form action
+      }} handleUpdateProp={handleUpdate} />
+    </div>
   );
 }

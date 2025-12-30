@@ -1,12 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import { useState, Suspense } from "react";
+import { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import ClientLayout from "../../components/ClientLayout";
 
 
-function LoginFormInner() {
+function LoginForm() {
   const searchParams = useSearchParams();
   const langParam = searchParams?.get('lang');
   const lang = langParam === 'sr' || langParam === 'en' ? langParam : 'en';
@@ -52,42 +52,41 @@ function LoginFormInner() {
   }
 
   return (
-    <>
-      <form onSubmit={handleLogin} className="p-4 border rounded flex flex-col gap-2 max-w-sm">
-        <div className="flex justify-between mb-4">
-          <span className="font-bold">{t('Login', 'Prijava')}</span>
-          <div>
-            <a href="?lang=en" className="mr-2 underline text-blue-600">EN</a>
-            <a href="?lang=sr" className="underline text-blue-600">SR</a>
-          </div>
-        </div>
-        <input
-          type="email"
-          placeholder={t('Email', 'Email')}
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-          className="border px-2 py-1 rounded"
-        />
-        <input
-          type="password"
-          placeholder={t('Password', 'Lozinka')}
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          required
-          className="border px-2 py-1 rounded"
-        />
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">{t('Sign in', 'Prijavi se')}</button>
-        {error && <p className="text-red-500">{error}</p>}
-      </form>
-    </>
+    <form onSubmit={handleLogin} className="p-4 border rounded flex flex-col gap-2 max-w-sm">
+      <div className="flex justify-between mb-4">
+        <span className="font-bold">{t('Login', 'Prijava')}</span>
+        {/* <div>
+          <a href="?lang=en" className="mr-2 underline text-blue-600">EN</a>
+          <a href="?lang=sr" className="underline text-blue-600">SR</a>
+        </div> */}
+      </div>
+      <input
+        type="email"
+        placeholder={t('Email', 'Email')}
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        required
+        className="border px-2 py-1 rounded"
+      />
+      <input
+        type="password"
+        placeholder={t('Password', 'Lozinka')}
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+        required
+        className="border px-2 py-1 rounded"
+      />
+      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">{t('Sign in', 'Prijavi se')}</button>
+      {error && <p className="text-red-500">{error}</p>}
+    </form>
   );
 }
 
-export default function LoginForm() {
+export default function PrijavaPage() {
+  const lang = "en"; // ili iz query parametara ako želiš
   return (
-    <Suspense>
-      <LoginFormInner />
-    </Suspense>
+    <ClientLayout lang={lang}>
+      <LoginForm />
+    </ClientLayout>
   );
 }
