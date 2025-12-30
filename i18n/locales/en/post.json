@@ -1,0 +1,15 @@
+{
+    "posts": "Posts",
+    "contents": "Contents",
+    "create_post": "Create Post",
+    "edit_post": "Edit Post",
+    "delete_post": "Delete Post",
+    "no_posts": "No posts available.",
+    "author": "Author",
+    "title": "Title",
+    "content": "Content",
+    "actions": "Actions",
+    "submit": "Submit",
+    "cancel": "Cancel"
+
+}

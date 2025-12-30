@@ -5,6 +5,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import sr from '@/i18n/locales/sr/navbar.json';
 import en from '@/i18n/locales/en/navbar.json';
+
 interface NavbarProps {
   lang?: string;
 }
@@ -13,7 +14,7 @@ export default function Navbar({ lang }: NavbarProps) {
   const { data: session, status } = useSession();
  const searchParams = useSearchParams();
   const currentLang = searchParams.get('lang') || lang || 'sr';
-  const t = currentLang === 'en' ? en : sr;
+  const t = currentLang === 'sr' ? sr : en;
   const router = useRouter();
 const handleLangSwitch = () => {
     const newLang = currentLang === 'sr' ? 'en' : 'sr';

@@ -1,0 +1,15 @@
+{
+    "posts": "Objave",
+    "contents": "Sadržaji",
+    "create_post": "Kreiraj objavu",
+    "edit_post": "Izmeni objavu",
+    "delete_post": "Obriši objavu",
+    "no_posts": "Nema dostupnih objava.",
+    "author": "Autor",
+    "title": "Naslov",
+    "content": "Sadržaj",
+    "actions": "Akcije",
+    "submit": "Potvrdi",
+    "cancel": "Otkaži"
+
+}
