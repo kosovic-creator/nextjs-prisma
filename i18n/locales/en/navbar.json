@@ -1,3 +1,4 @@
+
 {
   "home": "Home",
   "profile": "Profile",
@@ -10,5 +11,6 @@
   "title": "WebShop",
   "favorites": "Favorites",
   "my_orders": "My Orders",
-  "about_us": "About Us"
+  "about_us": "About Us",
+  "posts": "Posts"
 }

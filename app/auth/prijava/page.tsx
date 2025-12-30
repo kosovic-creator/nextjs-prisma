@@ -39,10 +39,7 @@ function LoginForm() {
       <div className="p-4 border rounded">
         <div className="flex justify-between mb-4">
           <span className="font-bold">{t('Login', 'Prijava')}</span>
-          <div>
-            <a href="?lang=en" className="mr-2 underline text-blue-600">EN</a>
-            <a href="?lang=sr" className="underline text-blue-600">SR</a>
-          </div>
+          
         </div>
         <p>{t('Logged in as:', 'Prijavljeni ste kao:')} <b>{session.user?.email}</b></p>
         <p>{t('Your role:', 'Vaša rola:')} <b>{session.user?.role}</b></p>
@@ -55,10 +52,7 @@ function LoginForm() {
     <form onSubmit={handleLogin} className="p-4 border rounded flex flex-col gap-2 max-w-sm">
       <div className="flex justify-between mb-4">
         <span className="font-bold">{t('Login', 'Prijava')}</span>
-        {/* <div>
-          <a href="?lang=en" className="mr-2 underline text-blue-600">EN</a>
-          <a href="?lang=sr" className="underline text-blue-600">SR</a>
-        </div> */}
+
       </div>
       <input
         type="email"

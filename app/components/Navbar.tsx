@@ -24,9 +24,9 @@ const handleLangSwitch = () => {
   return (
     <nav className="bg-gray-800 text-white px-4 py-3 flex justify-between items-center">
       <div className="flex gap-6 items-center">
-        <Link href="/" className="font-bold text-lg">Home</Link>
+        <Link href="/" className="font-bold text-lg">{t.home}</Link>
         <Link href="/posts/trans" className="hover:underline">PostsTrans</Link>
-        <Link href="/posts" className="hover:underline">Posts</Link>
+        <Link href="/posts" className="hover:underline">{t.posts}</Link>
       </div>
       <div className="flex gap-4 items-center">
         {status === "loading" ? (
@@ -37,15 +37,15 @@ const handleLangSwitch = () => {
             <button
               onClick={() => signOut()}
               className="hover:underline bg-red-600 px-3 py-1 rounded"
-            >Odjava</button>
+            >{t.logout}</button>
           </>
         ) : (
           <>
             <button
               onClick={() =>router.push('/auth/prijava')}
               className="hover:underline bg-green-600 px-3 py-1 rounded"
-            >Prijava</button>
-            <Link href="/auth/register" className="hover:underline">Registracija</Link>
+            >{t.login}</button>
+            <Link href="/auth/register" className="hover:underline">{t.register}</Link>
           </>
         )}
         <button
