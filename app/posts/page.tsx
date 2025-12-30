@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { getAllPosts, deletePostById } from "@/actions/post";
 import Link from "next/link";
-import ClientLayout from "../components/ClientLayout";
 import { getLocaleMessages } from "@/lib/i18n";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
@@ -22,7 +22,6 @@ export default async function PostsPage({ searchParams }: Props) {
       lang = params.lang === 'sr' ? 'sr' : 'en';
     }
   }
-
   const messages = getLocaleMessages(lang, 'post');
   const t = (key: string) => (messages as Record<string, string>)[key] ?? key;
   const session = await getServerSession(authOptions);
@@ -33,7 +32,7 @@ export default async function PostsPage({ searchParams }: Props) {
   }
 
   return (
-    <ClientLayout lang={lang}>
+
     <div className="max-w-4xl mx-auto p-4">
       <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">{t("posts")}</h1>
@@ -74,6 +73,6 @@ export default async function PostsPage({ searchParams }: Props) {
       </table>
         {/* <h1>The value of customKey is: {process.env.customKey}</h1> */}
     </div>
-    </ClientLayout>
+
   );
 }

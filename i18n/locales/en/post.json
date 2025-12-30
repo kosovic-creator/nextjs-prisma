@@ -10,6 +10,8 @@
     "content": "Content",
     "actions": "Actions",
     "submit": "Submit",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "enter_post_title": "Enter your post title",
+    "enter_post_content": "Write your post content here..."
 
 }

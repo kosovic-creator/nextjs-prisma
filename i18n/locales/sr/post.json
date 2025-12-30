@@ -10,6 +10,8 @@
     "content": "Sadržaj",
     "actions": "Akcije",
     "submit": "Potvrdi",
-    "cancel": "Otkaži"
+    "cancel": "Otkaži",
+    "enter_post_title": "Unesite naslov vaše objave",
+    "enter_post_content": "Napišite sadržaj vaše objave ovde..."
 
 }
