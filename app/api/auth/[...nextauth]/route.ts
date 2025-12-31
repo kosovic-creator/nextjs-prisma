@@ -4,6 +4,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
 import EmailProvider from "next-auth/providers/email";
 import prisma from "@/lib/prisma";
+import bcrypt from "bcrypt";
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
@@ -23,14 +24,17 @@ export const authOptions = {
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         });
-        if (user && user.password && user.password === credentials.password) {
-          return {
-            id: user.id.toString(),
-            name: user.name,
-            email: user.email,
-            role: user.role,
-            password: user.password,
-          };
+        if (user && user.password) {
+          const isValid = await bcrypt.compare(credentials.password, user.password);
+          if (isValid) {
+            return {
+              id: user.id.toString(),
+              name: user.name,
+              email: user.email,
+              role: user.role,
+              password: user.password,
+            };
+          }
         }
         return null;
       },
