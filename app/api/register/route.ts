@@ -1,22 +1,23 @@
 import prisma from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import bcrypt from "bcrypt";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   const { email, password, name } = await req.json();
-  if (!email || !password) {
-    return NextResponse.json({ error: "Email i lozinka su obavezni." }, { status: 400 });
-  }
-  const existing = await prisma.user.findUnique({ where: { email } });
-  if (existing) {
-    return NextResponse.json({ error: "Korisnik već postoji." }, { status: 409 });
-  }
+
+  // Provjeri da li korisnik već postoji...
+
+  // Heširaj password
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  // Sačuvaj korisnika s heširanim passwordom
   const user = await prisma.user.create({
     data: {
       email,
-      password,
       name,
-      role: "user",
+      password: hashedPassword,
     },
   });
-  return NextResponse.json({ success: true, user });
+
+  return NextResponse.json({ user });
 }

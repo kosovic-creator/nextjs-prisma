@@ -53,7 +53,7 @@ export default function Navbar() {
       {/* Desna strana */}
       <div className="flex items-center gap-4">
         {status === "loading" ? (
-          <span>Učitavanje...</span>
+          null // ili <></>
         ) : session ? (
           <>
             <span className="font-semibold">{session.user?.name || session.user?.email}</span>
