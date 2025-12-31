@@ -1,3 +1,4 @@
+"use server";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { forbidden, redirect } from "next/navigation";
@@ -14,8 +15,24 @@ export async function getAllPosts() {
 }
 
 export async function getAllPostsTrans() {
-    const posts = await prisma.$transaction(async (prismaTxn) => {
-        const allPosts = await prismaTxn.post.findMany({
+    interface Author {
+        id: number;
+        name: string | null;
+        email: string;
+        // Add other author fields as needed
+    }
+
+    interface Post {
+        id: number;
+        title: string;
+        content: string | null;
+        authorId: number;
+        author: Author;
+        // Add other post fields as needed
+    }
+
+    const posts: Post[] = await prisma.$transaction(async (prismaTxn): Promise<Post[]> => {
+        const allPosts: Post[] = await prismaTxn.post.findMany({
             include: {
                 author: true,
             },

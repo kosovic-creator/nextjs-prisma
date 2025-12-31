@@ -61,7 +61,7 @@ export default async function PostsPage({ searchParams }: Props) {
               <td className="border p-2">{post.content}</td>
               <td className="border p-2">{post.author?.name ?? t("Unknown")}</td>
               <td className="border p-2 flex gap-2 justify-center">
-                <a href={`/posts/${post.id}?lang=${lang}`} className="bg-blue-500 text-white px-2 py-1 rounded">{t("edit_post")}</a>
+                <Link href={`/posts/${post.id}?lang=${lang}`} className="bg-blue-500 text-white px-2 py-1 rounded">{t("edit_post")}</Link>
                 <form action={handleDelete}>
                   <input type="hidden" name="id" value={post.id} />
                   <button type="submit" className="bg-red-500 text-white px-2 py-1 rounded">{t("delete_post")}</button>

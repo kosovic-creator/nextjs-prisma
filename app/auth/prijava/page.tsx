@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-import ClientLayout from "../../components/ClientLayout";
 
 
-function LoginForm() {
+function PrijavaContent() {
   const searchParams = useSearchParams();
   const langParam = searchParams?.get('lang');
   const lang = langParam === 'sr' || langParam === 'en' ? langParam : 'en';
@@ -18,7 +17,8 @@ function LoginForm() {
     role?: string;
   };
   type SessionType = { user?: SessionUser };
-  const { data: session } = useSession() as { data: SessionType };
+  const { data: session, status } = useSession() as { data: SessionType; status: string };
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -34,12 +34,16 @@ function LoginForm() {
     if (res?.error) setError(res.error);
   };
 
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
   if (session) {
     return (
       <div className="p-4 border rounded">
         <div className="flex justify-between mb-4">
           <span className="font-bold">{t('Login', 'Prijava')}</span>
-          
+
         </div>
         <p>{t('Logged in as:', 'Prijavljeni ste kao:')} <b>{session.user?.email}</b></p>
         <p>{t('Your role:', 'Vaša rola:')} <b>{session.user?.role}</b></p>
@@ -76,11 +80,11 @@ function LoginForm() {
   );
 }
 
-export default function PrijavaPage() {
-  const lang = "en"; // ili iz query parametara ako želiš
+export default function Page() {
   return (
-    <ClientLayout lang={lang}>
-      <LoginForm />
-    </ClientLayout>
+    <Suspense fallback={<div>Loading...</div>}>
+      <PrijavaContent />
+    </Suspense>
   );
 }
+

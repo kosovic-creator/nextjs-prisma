@@ -1,10 +1,8 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]/route";
-import HomeClient from "./HomeClient";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
-  // Only pick serializable fields
   const safeSession = session
     ? {
       user: {
@@ -14,8 +12,19 @@ export default async function Page() {
       },
     }
     : null;
+
   return (
-    <HomeClient lang="en" session={safeSession} />
+    <main className="flex flex-col items-center justify-center min-h-screen">
+      <h1 className="text-2xl font-bold mb-4">
+        NextAuth v7 Demo {safeSession?.user?.email}
+      </h1>
+      {/* <Karusel /> */}
+      {safeSession?.user?.role === "admin" && (
+        <div className="mt-4 p-4 bg-green-100 border rounded">
+          <b>Admin sekcija:</b> Samo admin vidi ovu poruku!
+        </div>
+      )}
+    </main>
   );
 }
 

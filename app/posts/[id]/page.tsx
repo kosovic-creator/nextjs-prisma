@@ -39,23 +39,24 @@ export default async function UpdatePostPage({ params, searchParams }: Props) {
   }
 
   return (
-
-
-  <div className="max-w-2xl mx-auto p-4">
+    <div className="max-w-2xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-6">{t("edit_post")}</h1>
       <form action={handleUpdate} className="space-y-4">
-        <input name="title" defaultValue={post.title} className="border p-2 rounded w-full" />
+        <input
+          name="title"
+          defaultValue={post.title}
+          className="border p-2 rounded w-full"
+          placeholder={t("title_placeholder")}
+        />
         <textarea
           name="content"
           defaultValue={post.content ?? ""}
           className="border p-2 rounded w-full"
+          placeholder={t("content_placeholder")}
         ></textarea>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">{t('Update')}</button>
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+          {t("edit_post")}
+        </button>
       </form>
     </div>
-
-
-
-
-
   );}
