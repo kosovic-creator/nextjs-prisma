@@ -62,6 +62,8 @@ export default function PostForm({
     }
   }, [showSuccess, lang, router]);
 
+  // Validacija pojedinačnog polja pri gubitku fokusa
+
   const validateField = (fieldName: string, value: string) => {
     try {
       const schema = postSchema(t);

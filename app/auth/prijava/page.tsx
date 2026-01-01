@@ -40,43 +40,46 @@ export default function PrijavaContent() {
 
   if (session) {
     return (
-      <div className="p-4 border rounded">
-        <div className="flex justify-between mb-4">
-          <span className="font-bold">{t('Login', 'Prijava')}</span>
-
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="p-4 border rounded max-w-sm w-full">
+          <div className="flex justify-between mb-4">
+            <span className="font-bold">{t('Login', 'Prijava')}</span>
+          </div>
+          <p>{t('Logged in as:', 'Prijavljeni ste kao:')} <b>{session.user?.email}</b></p>
+          <p>{t('Your role:', 'Vaša rola:')} <b>{session.user?.role}</b></p>
+          <button onClick={() => signOut()} className="mt-2 px-4 py-2 bg-red-500 text-white rounded w-full">{t('Sign out', 'Odjavi se')}</button>
         </div>
-        <p>{t('Logged in as:', 'Prijavljeni ste kao:')} <b>{session.user?.email}</b></p>
-        <p>{t('Your role:', 'Vaša rola:')} <b>{session.user?.role}</b></p>
-        <button onClick={() => signOut()} className="mt-2 px-4 py-2 bg-red-500 text-white rounded">{t('Sign out', 'Odjavi se')}</button>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleLogin} className="p-4 border rounded flex flex-col gap-2 max-w-sm">
-      <div className="flex justify-between mb-4">
-        <span className="font-bold">{t('Login', 'Prijava')}</span>
+    <div className="min-h-screen flex items-center justify-center">
+      <form onSubmit={handleLogin} className="p-4 border rounded flex flex-col gap-2 max-w-sm w-full">
+        <div className="flex justify-between mb-4">
+          <span className="font-bold">{t('Login', 'Prijava')}</span>
 
-      </div>
-      <input
-        type="email"
-        placeholder={t('Email', 'Email')}
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-        required
-        className="border px-2 py-1 rounded"
-      />
-      <input
-        type="password"
-        placeholder={t('Password', 'Lozinka')}
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-        required
-        className="border px-2 py-1 rounded"
-      />
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">{t('Sign in', 'Prijavi se')}</button>
-      {error && <p className="text-red-500">{error}</p>}
-    </form>
+        </div>
+        <input
+          type="email"
+          placeholder={t('Email', 'Email')}
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          required
+          className="border px-2 py-1 rounded"
+        />
+        <input
+          type="password"
+          placeholder={t('Password', 'Lozinka')}
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          required
+          className="border px-2 py-1 rounded"
+        />
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">{t('Sign in', 'Prijavi se')}</button>
+        {error && <p className="text-red-500">{error}</p>}
+      </form>
+    </div>
   );
 }
 

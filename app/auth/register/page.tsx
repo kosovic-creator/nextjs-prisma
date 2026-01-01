@@ -111,49 +111,51 @@ export default function RegisterForm() {
     validateField(name, value);
   };
   return (
-    <form onSubmit={handleRegister} className="p-4 border rounded flex flex-col gap-2 max-w-sm mt-4">
-      <div className="flex justify-between mb-4">
-        <span className="font-bold">{t("register.title")}</span>
-      </div>
-      <div>
-        <input
-          type="text"
-          name="ime"
-          placeholder={t("register.name")}
-          value={name}
-          onBlur={handleBlur}
-          onChange={e => setName(e.target.value)}
-          className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all ${errors.ime ? 'border-red-500' : 'border-gray-300'}`}
-        />
-        {errors.ime && <p className="text-red-500 text-sm mt-1">{errors.ime}</p>}
-      </div>
-      <div>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={email}
-          onBlur={handleBlur}
-          onChange={e => setEmail(e.target.value)}
-          className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
-        />
-        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-      </div>
-      <div>
-        <input
-          type="password"
-          name="lozinka"
-          placeholder={t("register.password")}
-          value={password}
-          onBlur={handleBlur}
-          onChange={e => setPassword(e.target.value)}
-          className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all ${errors.lozinka ? 'border-red-500' : 'border-gray-300'}`}
-        />
-        {errors.lozinka && <p className="text-red-500 text-sm mt-1">{errors.lozinka}</p>}
-      </div>
-      <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">{t("register.submit")}</button>
-      {error && <p className="text-red-500">{error}</p>}
-      {success && <p className="text-green-600">{success}</p>}
-    </form>
+    <div className="min-h-screen flex items-center justify-center">
+      <form onSubmit={handleRegister} className="p-4 border rounded flex flex-col gap-2 max-w-sm w-full">
+        <div className="flex justify-between mb-4">
+          <span className="font-bold">{t("register.title")}</span>
+        </div>
+        <div>
+          <input
+            type="text"
+            name="ime"
+            placeholder={t("register.name")}
+            value={name}
+            onBlur={handleBlur}
+            onChange={e => setName(e.target.value)}
+            className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all ${errors.ime ? 'border-red-500' : 'border-gray-300'}`}
+          />
+          {errors.ime && <p className="text-red-500 text-sm mt-1">{errors.ime}</p>}
+        </div>
+        <div>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={email}
+            onBlur={handleBlur}
+            onChange={e => setEmail(e.target.value)}
+            className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
+          />
+          {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+        </div>
+        <div>
+          <input
+            type="password"
+            name="lozinka"
+            placeholder={t("register.password")}
+            value={password}
+            onBlur={handleBlur}
+            onChange={e => setPassword(e.target.value)}
+            className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all ${errors.lozinka ? 'border-red-500' : 'border-gray-300'}`}
+          />
+          {errors.lozinka && <p className="text-red-500 text-sm mt-1">{errors.lozinka}</p>}
+        </div>
+        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">{t("register.submit")}</button>
+        {error && <p className="text-red-500">{error}</p>}
+        {success && <p className="text-green-600">{success}</p>}
+      </form>
+    </div>
   );
 }
