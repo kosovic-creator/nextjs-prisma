@@ -1,11 +1,11 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 
 
-function PrijavaContent() {
+export default function PrijavaContent() {
   const searchParams = useSearchParams();
   const langParam = searchParams?.get('lang');
   const lang = langParam === 'sr' || langParam === 'en' ? langParam : 'en';
@@ -80,11 +80,5 @@ function PrijavaContent() {
   );
 }
 
-export default function Page() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <PrijavaContent />
-    </Suspense>
-  );
-}
+
 
