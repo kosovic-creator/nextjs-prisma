@@ -12,6 +12,13 @@
     "submit": "Potvrdi",
     "cancel": "Otkaži",
     "enter_post_title": "Unesite naslov vaše objave",
-    "enter_post_content": "Napišite sadržaj vaše objave ovde..."
-
+    "enter_post_content": "Napišite sadržaj vaše objave ovde...",
+    "title_error": "Naslov mora imati najmanje 3 karaktera.",
+    "title_max_error": "Naslov ne sme biti duži od 200 karaktera.",
+    "content_error": "Sadržaj mora imati najmanje 10 karaktera.",
+    "content_max_error": "Sadržaj ne sme biti duži od 5000 karaktera.",
+    "title_placeholder": "Naslov objave",
+    "content_placeholder": "Sadržaj objave",
+    "post_created_success": "Objava je uspješno kreirana!",
+    "post_updated_success": "Objava je uspješno ažurirana!"
 }

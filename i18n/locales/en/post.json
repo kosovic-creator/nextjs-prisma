@@ -12,6 +12,13 @@
     "submit": "Submit",
     "cancel": "Cancel",
     "enter_post_title": "Enter your post title",
-    "enter_post_content": "Write your post content here..."
-
+    "enter_post_content": "Write your post content here...",
+    "title_error": "Title must be at least 3 characters long.",
+    "title_max_error": "Title must not exceed 200 characters.",
+    "content_error": "Content must be at least 10 characters long.",
+    "content_max_error": "Content must not exceed 5000 characters.",
+    "title_placeholder": "Post title",
+    "content_placeholder": "Post content",
+    "post_created_success": "Post created successfully!",
+    "post_updated_success": "Post updated successfully!"
 }
