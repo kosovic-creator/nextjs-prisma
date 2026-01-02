@@ -19,13 +19,33 @@ export default function PrijavaContent() {
   type SessionType = { user?: SessionUser };
   const { data: session, status } = useSession() as { data: SessionType; status: string };
 
-  const [email, setEmail] = useState("");
+  // Lazy initialization - učitava se samo jednom pri inicijalizaciji
+  const [email, setEmail] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('rememberedEmail') || "";
+    }
+    return "";
+  });
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [rememberMe, setRememberMe] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return !!localStorage.getItem('rememberedEmail');
+    }
+    return false;
+  });
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+
+    // Čuvaj ili briši email iz localStorage
+    if (rememberMe) {
+      localStorage.setItem('rememberedEmail', email);
+    } else {
+      localStorage.removeItem('rememberedEmail');
+    }
+
     const res = await signIn("credentials", {
       redirect: false,
       email,
@@ -66,6 +86,7 @@ export default function PrijavaContent() {
           value={email}
           onChange={e => setEmail(e.target.value)}
           required
+          autoComplete="email"
           className="border px-2 py-1 rounded"
         />
         <input
@@ -74,9 +95,19 @@ export default function PrijavaContent() {
           value={password}
           onChange={e => setPassword(e.target.value)}
           required
+          autoComplete="current-password"
           className="border px-2 py-1 rounded"
         />
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">{t('Sign in', 'Prijavi se')}</button>
+        <label className="flex items-center gap-2 ">
+          <input
+            type="checkbox"
+            checked={rememberMe}
+            onChange={e => setRememberMe(e.target.checked)}
+            className="cursor-pointer"
+          />
+          <span className="text-sm">{t('Remember my email', 'Zapamti moj email')}</span>
+        </label>
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded ">{t('Sign in', 'Prijavi se')}</button>
         {error && <p className="text-red-500">{error}</p>}
       </form>
     </div>
