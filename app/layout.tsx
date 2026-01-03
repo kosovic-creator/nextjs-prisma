@@ -22,9 +22,11 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
   Sidebar,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
   Sidebar: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -34,6 +36,7 @@ export default function RootLayout({
             {Sidebar}
             <div className="flex-1">
               <ClientLayout lang="en">{children}</ClientLayout>
+              {modal}
             </div>
           </div>
         </SidebarProvider>

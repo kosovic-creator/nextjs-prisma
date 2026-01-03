@@ -5,8 +5,9 @@ import { getLocaleMessages } from "@/lib/i18n";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import DeleteButton from "./components/DeleteButton";
+import PostTableRow from "./components/PostTableRow";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";;
 
 type Props = {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
@@ -76,21 +77,18 @@ export default async function PostsPage({ searchParams }: Props) {
               posts.map(post => {
                 const categorySlug = encodeURIComponent(post.category ?? "uncategorized");
                 return (
-                  <tr key={post.id} className="border-b">
-                    <td className="border p-2 text-center">
-                    <Link href={`/posts/${categorySlug}/${post.id}?lang=${lang}`} className="text-blue-600 underline">{post.id}</Link>
-                  </td>
-                  <td className="border p-2">{post.title}</td>
-                  <td className="border p-2">{post.content}</td>
-                  <td className="border p-2">{post.category ?? t("Unknown")}</td>
-                  <td className="border p-2">{post.author?.name ?? t("Unknown")}</td>
-                  <td className="border p-2 flex gap-2 justify-center">
-                    <Link href={`/posts/${categorySlug}/${post.id}?lang=${lang}`} className="bg-blue-500 text-white px-2 py-1 rounded">{t("edit_post")}</Link>
-                    <DeleteButton postId={post.id} postTitle={post.title} lang={lang} />
-                  </td>
-                </tr>
-              );
-            })
+                  <PostTableRow
+                    key={post.id}
+                    post={post}
+                    categorySlug={categorySlug}
+                    lang={lang}
+                    unknownLabel={t("Unknown")}
+                    editLabel={t("edit_post")}
+                    author={post.author?.name ?? undefined}
+                    showDeleteButton={true}
+                  />
+                );
+              })
           )}
         </tbody>
       </table>
