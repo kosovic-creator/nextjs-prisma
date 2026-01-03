@@ -68,26 +68,29 @@ export default async function PostsPage({ searchParams }: Props) {
         <tbody>
           {posts.length === 0 && !error ? (
             <tr>
-              <td colSpan={5} className="border p-4 text-center text-gray-500">
+              <td colSpan={6} className="border p-4 text-center text-gray-500">
                 {lang === 'sr' ? 'Nema postova' : 'No posts found'}
               </td>
             </tr>
           ) : (
-            posts.map(post => (
-              <tr key={post.id} className="border-b">
-                <td className="border p-2 text-center">
-                  <Link href={`/posts/${post.id}?lang=${lang}`} className="text-blue-600 underline">{post.id}</Link>
-                </td>
-                <td className="border p-2">{post.title}</td>
-                <td className="border p-2">{post.content}</td>
-                <td className="border p-2">{post.category ?? t("Unknown")}</td>
-                <td className="border p-2">{post.author?.name ?? t("Unknown")}</td>
-                <td className="border p-2 flex gap-2 justify-center">
-                  <Link href={`/posts/${post.id}?lang=${lang}`} className="bg-blue-500 text-white px-2 py-1 rounded">{t("edit_post")}</Link>
-                  <DeleteButton postId={post.id} postTitle={post.title} lang={lang} />
-                </td>
-              </tr>
-            ))
+              posts.map(post => {
+                const categorySlug = encodeURIComponent(post.category ?? "uncategorized");
+                return (
+                  <tr key={post.id} className="border-b">
+                    <td className="border p-2 text-center">
+                    <Link href={`/posts/${categorySlug}/${post.id}?lang=${lang}`} className="text-blue-600 underline">{post.id}</Link>
+                  </td>
+                  <td className="border p-2">{post.title}</td>
+                  <td className="border p-2">{post.content}</td>
+                  <td className="border p-2">{post.category ?? t("Unknown")}</td>
+                  <td className="border p-2">{post.author?.name ?? t("Unknown")}</td>
+                  <td className="border p-2 flex gap-2 justify-center">
+                    <Link href={`/posts/${categorySlug}/${post.id}?lang=${lang}`} className="bg-blue-500 text-white px-2 py-1 rounded">{t("edit_post")}</Link>
+                    <DeleteButton postId={post.id} postTitle={post.title} lang={lang} />
+                  </td>
+                </tr>
+              );
+            })
           )}
         </tbody>
       </table>

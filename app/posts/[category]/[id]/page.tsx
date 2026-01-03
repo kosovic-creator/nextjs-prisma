@@ -1,20 +1,30 @@
 import { getPostById } from "@/actions/post";
 import { notFound } from "next/navigation";
 import { getLocaleMessages } from "@/lib/i18n";
-import PostForm from "../components/PostForm";
+import PostForm from "../../components/PostForm";
 
+type Params = { category: string; id: string };
 type Props = {
-  params: Promise<{ id: string }>,
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+  params: Promise<Params>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export default async function UpdatePostPage({ params, searchParams }: Props) {
   const resolvedParams = await params;
   const resolvedSearchParams = searchParams ? await searchParams : {};
+
   const id = Number(resolvedParams?.id);
-  if (!resolvedParams?.id || isNaN(id)) notFound();
+  const categoryParam = resolvedParams?.category;
+  if (!categoryParam || !resolvedParams?.id || isNaN(id)) notFound();
+
   const post = await getPostById(id);
   if (!post) notFound();
+
+  const normalizedRouteCategory = categoryParam.toLowerCase();
+  const normalizedPostCategory = (post.category ?? "uncategorized").toLowerCase();
+  if (normalizedRouteCategory !== normalizedPostCategory) {
+    notFound();
+  }
 
   // Odredi jezik
   let lang = 'en';
