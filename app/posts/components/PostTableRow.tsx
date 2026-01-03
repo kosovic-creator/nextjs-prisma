@@ -53,7 +53,7 @@ export default function PostTableRow({
     >
       <td className="border p-2 text-center text-gray-700 dark:text-gray-300">
         <Link
-          href={`/posts/${categorySlug}/${post.id}?lang=${lang}`}
+          href={`/post/${post.id}?lang=${lang}`}
           className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
           onClick={(e) => e.stopPropagation()}
         >
