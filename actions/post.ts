@@ -14,6 +14,22 @@ export async function getAllPosts() {
     return posts;
 }
 
+export async function getPostsByCategoryForUser(category: string, userId: number) {
+    const posts = await prisma.post.findMany({
+        where: {
+            authorId: userId,
+            category: {
+                equals: category,
+                mode: "insensitive",
+            },
+        },
+        include: {
+            author: true,
+        },
+    });
+    return posts;
+}
+
 export async function getAllPostsTrans() {
     interface Author {
         id: number;
