@@ -17,29 +17,55 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  try {
     const body = await request.json();
+    const { title, content, category, authorId } = body ?? {};
+
+    if (!authorId || isNaN(Number(authorId))) {
+      return new Response(JSON.stringify({ error: "Missing or invalid authorId" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    const userExists = await prisma.user.findUnique({ where: { id: Number(authorId) } });
+    if (!userExists) {
+      return new Response(JSON.stringify({ error: "Author not found" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
     const post = await prisma.post.create({
-        data: {
-            title: body.title,
-            content: body.content,
-            authorId: body.authorId,
-        },
-        include: {
-            author: true,
-        },
+      data: {
+        title,
+        content,
+        category,
+        authorId: Number(authorId),
+      },
+      include: {
+        author: true,
+      },
     });
+
     return new Response(JSON.stringify(post), {
-        status: 201,
-        headers: {
-            "Content-Type": "application/json",
-        },
+      status: 201,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
+  } catch (error: any) {
+    return new Response(JSON.stringify({ error: error.message || "Unknown error" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
 }
 
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
-    const { id, title, content, published, authorId } = body;
+    const { id, title, content, published, authorId, category } = body;
 
     if (!id || isNaN(Number(id))) {
       return new Response(JSON.stringify({ error: "Invalid or missing id" }), {
@@ -51,7 +77,7 @@ export async function PUT(request: Request) {
     // Update u bazi po id iz body-ja
     await prisma.post.update({
       where: { id: Number(id) },
-      data: { title, content, published, authorId },
+      data: { title, content, published, authorId, category },
     });
 
     return new Response(null, { status: 204 });

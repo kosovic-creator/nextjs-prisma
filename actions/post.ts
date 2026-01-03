@@ -49,7 +49,7 @@ export async function getPostById(id: number) {
     return post;
 }
 
-export async function updatePostById(id: number, title: string, content: string) {
+export async function updatePostById(id: number, title: string, content: string, category: string) {
     const session = await getServerSession(authOptions);
     const post = await prisma.post.findUnique({
         where: { id },
@@ -65,17 +65,18 @@ export async function updatePostById(id: number, title: string, content: string)
 
     await prisma.post.update({
         where: { id },
-        data: { title, content },
+        data: { title, content, category },
     });
     revalidatePath("/posts");
     redirect("/posts");
 }
 
-export async function createPost(title: string, content: string, authorId: number) {
+export async function createPost(title: string, content: string, category: string, authorId: number) {
     const post = await prisma.post.create({
         data: {
             title,
             content,
+            category,
             authorId,
         },
 

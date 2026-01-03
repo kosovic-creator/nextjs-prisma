@@ -58,6 +58,7 @@ export async function PUT(request: Request, context: { params: Promise<{ id: str
             data: {
                 title: body.title,
                 content: body.content,
+                category: body.category,
             },
         });
         return new Response(JSON.stringify(updatedPost), {

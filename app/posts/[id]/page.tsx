@@ -36,6 +36,7 @@ export default async function UpdatePostPage({ params, searchParams }: Props) {
       <PostForm
         initialTitle={post.title}
         initialContent={post.content ?? ""}
+        initialCategory={post.category ?? ""}
         submitLabel={t("edit_post")}
         successMessage={t("post_updated_success")}
         messages={messages}

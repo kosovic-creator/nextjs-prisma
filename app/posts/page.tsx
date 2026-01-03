@@ -60,6 +60,7 @@ export default async function PostsPage({ searchParams }: Props) {
             <th className="border p-2">ID</th>
               <th className="border p-2">{t("posts")}</th>
               <th className="border p-2">{t("content")}</th>
+            <th className="border p-2">{t("category")}</th>
               <th className="border p-2">{t("author")}</th>
               <th className="border p-2">{t("actions")}</th>
           </tr>
@@ -79,6 +80,7 @@ export default async function PostsPage({ searchParams }: Props) {
                 </td>
                 <td className="border p-2">{post.title}</td>
                 <td className="border p-2">{post.content}</td>
+                <td className="border p-2">{post.category ?? t("Unknown")}</td>
                 <td className="border p-2">{post.author?.name ?? t("Unknown")}</td>
                 <td className="border p-2 flex gap-2 justify-center">
                   <Link href={`/posts/${post.id}?lang=${lang}`} className="bg-blue-500 text-white px-2 py-1 rounded">{t("edit_post")}</Link>

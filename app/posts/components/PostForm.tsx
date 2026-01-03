@@ -9,6 +9,7 @@ import { postSchema } from "@/zod-schemas";
 type PostFormProps = {
   initialTitle?: string;
   initialContent?: string;
+  initialCategory?: string;
   submitLabel: string;
   successMessage: string;
   messages: Record<string, any>;
@@ -20,6 +21,7 @@ type PostFormProps = {
 export default function PostForm({
   initialTitle = "",
   initialContent = "",
+  initialCategory = "",
   submitLabel,
   successMessage,
   messages,
@@ -30,6 +32,7 @@ export default function PostForm({
   const router = useRouter();
   const [title, setTitle] = useState(initialTitle);
   const [content, setContent] = useState(initialContent);
+  const [category, setCategory] = useState(initialCategory);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [serverError, setServerError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -101,9 +104,9 @@ export default function PostForm({
     try {
       if (!authorId) throw new Error(t("no_author"));
 
-      postSchema(t).parse({ title, content });
+      postSchema(t).parse({ title, content, category });
 
-      const payload: any = { title, content, authorId };
+      const payload: any = { title, content, category, authorId };
       if (postId) payload.id = postId;
 
       const res = await fetch("/api/posts", {
@@ -178,6 +181,22 @@ export default function PostForm({
             className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none ${errors.content ? 'border-red-500' : 'border-gray-300'}`}
           />
           {errors.content && <p className="text-red-500 text-sm mt-1">{errors.content}</p>}
+        </div>
+        <div>
+          <label htmlFor="category" className="block text-lg mb-2">
+            {t("category")}
+          </label>
+          <input
+            type="text"
+            id="category"
+            name="category"
+            value={category}
+            onChange={e => setCategory(e.target.value)}
+            onBlur={handleBlur}
+            placeholder={t("enter_post_category")}
+            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none ${errors.category ? 'border-red-500' : 'border-gray-300'}`}
+          />
+          {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category}</p>}
         </div>
         <button
           type="submit"
