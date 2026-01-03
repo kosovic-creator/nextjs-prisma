@@ -5,11 +5,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useSession, signOut } from "next-auth/react"; // Dodaj ovo!
 import sr from '@/i18n/locales/sr/navbar.json';
 import en from '@/i18n/locales/en/navbar.json';
+import { useSidebar } from "@/app/context/SidebarContext";
 
 export default function Navbar() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { data: session, status } = useSession(); // Dodaj ovo!
+  const { toggle } = useSidebar();
 
   // Uvijek čitaj jezik iz query parametara
   const currentLang = searchParams.get("lang") === "en" ? "en" : "sr";
@@ -32,6 +34,27 @@ export default function Navbar() {
 
   return (
     <nav className="bg-gray-800 text-white px-4 py-3 flex justify-between items-center">
+      {/* Hamburger Menu */}
+      <button
+        onClick={toggle}
+        className="p-2 hover:bg-gray-700 rounded-md transition-colors"
+        aria-label="Toggle menu"
+      >
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+
       {/* Lijeva strana */}
       <div className="flex gap-6 items-center">
         <Link href={withLang("/")} className="font-bold text-lg">{t.home}</Link>
