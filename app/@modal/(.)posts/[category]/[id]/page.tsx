@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 
 interface Post {
   id: number;
@@ -13,12 +13,14 @@ interface Post {
 
 export default function PostModal() {
   const params = useParams();
-    const router = useRouter();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-    const id = params.id as string;
+  const id = params.id as string;
+  const lang = searchParams.get("lang") || "en";
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -45,6 +47,13 @@ export default function PostModal() {
 
   const handleClose = () => {
     router.back();
+  };
+
+  const handleEdit = () => {
+    if (post) {
+      // Koristimo window.location za hard navigation koja resetuje sve slotove
+      window.location.href = `/post/${post.id}?lang=${lang}`;
+    }
   };
 
   return (
@@ -126,12 +135,18 @@ export default function PostModal() {
               </div>
 
               <div className="flex gap-3 pt-6 border-t border-gray-200 dark:border-gray-700">
-                                      <button
+                    <button
                   onClick={handleClose}
-                                          className="w-full px-4 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded-lg transition-colors text-sm font-semibold"
+                      className="w-full px-4 py-2.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded-lg transition-colors text-sm font-semibold"
                 >
                   Zatvori
                 </button>
+                    <button
+                      onClick={handleEdit}
+                      className="w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-semibold"
+                    >
+                      Uredi Post
+                    </button>
               </div>
             </div>
           )}

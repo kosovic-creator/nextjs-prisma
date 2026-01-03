@@ -1,7 +1,7 @@
 import { getPostById } from "@/actions/post";
 import { notFound } from "next/navigation";
 import { getLocaleMessages } from "@/lib/i18n";
-import PostForm from "../../posts/components/PostForm";
+import PostForm from "./../../posts/components/PostForm";
 
 type Props = {
   params: Promise<{ id: string }>;
