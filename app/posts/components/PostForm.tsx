@@ -198,13 +198,22 @@ export default function PostForm({
           />
           {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category}</p>}
         </div>
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 disabled:bg-gray-400"
-        >
-          {isSubmitting ? "..." : submitLabel}
-        </button>
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 disabled:bg-gray-400 transition-colors touch-manipulation"
+          >
+            {isSubmitting ? "..." : submitLabel}
+          </button>
+          <button
+            type="button"
+            onClick={() => router.push(`/posts?lang=${lang}`)}
+            className="w-full bg-gray-500 text-white py-3 rounded-lg hover:bg-gray-600 transition-colors touch-manipulation"
+          >
+            {t("cancel")}
+          </button>
+        </div>
       </form>
     </>
   );

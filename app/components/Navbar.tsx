@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
 import sr from '@/i18n/locales/sr/navbar.json';
@@ -18,6 +18,8 @@ export default function Navbar() {
   const currentLang = searchParams.get("lang") === "en" ? "en" : "sr";
   const t = currentLang === "sr" ? sr : en;
 
+  const pathname = usePathname();
+
   const withLang = (path: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("lang", currentLang);
@@ -28,8 +30,8 @@ export default function Navbar() {
     const newLang = currentLang === "sr" ? "en" : "sr";
     const params = new URLSearchParams(searchParams.toString());
     params.set("lang", newLang);
-    router.push(`${window.location.pathname}?${params.toString()}`);
-  };
+  router.push(`${pathname}?${params.toString()}`);
+};
 
   return (
     <nav className="bg-gray-800 text-white px-4 py-3">
