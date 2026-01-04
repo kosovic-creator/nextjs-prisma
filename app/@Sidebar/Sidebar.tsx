@@ -3,32 +3,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "@/app/context/SidebarContext";
+import sr from '@/i18n/locales/sr/sidebar.json';
+import en from '@/i18n/locales/en/sidebar.json';
 
 interface SidebarProps {
   lang: string;
 }
 
-const translations = {
-  en: {
-    menu: "Menu",
-    home: "Home",
-    posts: "Posts",
-    newPost: "New Post",
-    closeMenu: "Close menu",
-  },
-  sr: {
-    menu: "Meni",
-    home: "Početna",
-    posts: "Postovi",
-    newPost: "Novi post",
-    closeMenu: "Zatvori meni",
-  },
-};
-
 export default function Sidebar({ lang }: SidebarProps) {
   const pathname = usePathname();
   const { isOpen, close } = useSidebar();
-  const t = translations[lang as keyof typeof translations] || translations.en;
+  const t = lang === "en" ? en : sr;
 
   const menuItems = [
     { href: "/", label: t.home, icon: "🏠" },
