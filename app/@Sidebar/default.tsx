@@ -13,7 +13,7 @@ function SidebarContent() {
 
 export default function SidebarSlot() {
   return (
-    <Suspense fallback={<div className="w-64 bg-gray-100 dark:bg-gray-800 min-h-screen" />}>
+    <Suspense fallback={<div className="w-64 bg-gray-100 dark:bg-gray-800 min-h-screen md:block hidden" />}>
       <SidebarContent />
     </Suspense>
   );

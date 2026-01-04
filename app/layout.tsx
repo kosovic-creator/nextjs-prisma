@@ -31,15 +31,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        {/* ostali meta tagovi */}
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-gray-900`}>
         <SidebarProvider>
-          <div className="flex">
+          <div className="flex min-h-screen">
             {Sidebar}
-            <div className="flex-1">
-              <ClientLayout lang="en">{children}</ClientLayout>
+            <div className="flex-1 flex flex-col w-full">
+              <ClientLayout lang="en">
+                <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full">
+                  {children}
+                </main>
+              </ClientLayout>
               {modal}
             </div>
           </div>
