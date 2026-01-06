@@ -11,3 +11,7 @@ export async function setThemeCookie(theme: string) {
     path: '/'
   })
 }
+export async function deleteCookie(name: string) {
+  const cookieStore = await cookies()
+  cookieStore.delete(name)
+}

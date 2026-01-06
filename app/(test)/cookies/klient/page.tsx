@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 import { useEffect } from 'react'
-import { setThemeCookie } from '@/actions/cookies'
+import { deleteCookie, setThemeCookie } from '@/actions/cookies'
 
 export default function ThemeSetter() {
   // useEffect(() => {
@@ -13,6 +13,7 @@ export default function ThemeSetter() {
     <div className='flex flex-col gap-4'>
       <button onClick={() => setThemeCookie('light')}>Postavi theme light</button>
       <button onClick={() => setThemeCookie('dark')}>Postavi theme dark</button>
+      <button onClick={() => deleteCookie('theme')}>Obriši theme cookie</button>
     </div>
   </>
 
