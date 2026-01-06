@@ -16,7 +16,15 @@ const nextConfig: NextConfig = {
 //   ]
 // },
 
-
+ cacheComponents: true,
+  cacheLife: {
+    // Override the 'days' profile
+    days: {
+      stale: 3600, // 1 hour
+      revalidate: 900, // 15 minutes
+      expire: 86400, // 1 day
+    },
+  },
 async rewrites() {
   return [
     {

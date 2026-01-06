@@ -3,6 +3,8 @@ import Link from 'next/link';
 import React from 'react'
 
 function TrensPage() {
+
+  
     async function transAction() {
 
       "use server";

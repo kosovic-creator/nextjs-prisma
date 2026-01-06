@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import sr from '@/i18n/locales/sr/navbar.json';
 import en from '@/i18n/locales/en/navbar.json';
 import { useSidebar } from "@/app/context/SidebarContext";
@@ -14,6 +14,7 @@ export default function Navbar() {
   const { data: session, status } = useSession();
   const { toggle } = useSidebar();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(true);
 
   const currentLang = searchParams.get("lang") === "en" ? "en" : "sr";
   const t = currentLang === "sr" ? sr : en;
@@ -78,7 +79,9 @@ export default function Navbar() {
 
         {/* Desktop Auth & Language */}
         <div className="hidden md:flex items-center gap-4">
-          {status === "loading" ? null : session ? (
+          {!mounted || status === "loading" ? (
+            <div className="w-32 h-8" />
+          ) : session ? (
             <>
               <span className="font-semibold truncate max-w-[150px]">
                 {session.user?.name || session.user?.email}
@@ -170,7 +173,9 @@ export default function Navbar() {
           </Link>
 
           <div className="border-t border-gray-700 pt-3 mt-3 space-y-2">
-            {status === "loading" ? null : session ? (
+            {!mounted || status === "loading" ? (
+              <div className="h-20" />
+            ) : session ? (
               <>
                 <div className="px-3 py-2 text-sm font-semibold truncate">
                   {session.user?.name || session.user?.email}
