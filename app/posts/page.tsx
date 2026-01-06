@@ -7,13 +7,24 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import DeleteButton from "./components/DeleteButton";
 import PostTableRow from "./components/PostTableRow";
 
-export const dynamic = "force-dynamic";;
+
 
 type Props = {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
 };
 
 export default async function PostsPage({ searchParams }: Props) {
+  // Access searchParams first to make the page dynamic
+  const params = searchParams ? await searchParams : {};
+  let lang = 'en';
+  if (params.lang) {
+    if (Array.isArray(params.lang)) {
+      lang = params.lang[0] === 'sr' ? 'sr' : 'en';
+    } else {
+      lang = params.lang === 'sr' ? 'sr' : 'en';
+    }
+  }
+
   let posts: Awaited<ReturnType<typeof getAllPosts>>;
   let error: string | null = null;
 
@@ -24,15 +35,6 @@ export default async function PostsPage({ searchParams }: Props) {
     posts = [];
   }
 
-  const params = searchParams ? await searchParams : {};
-  let lang = 'en';
-  if (params.lang) {
-    if (Array.isArray(params.lang)) {
-      lang = params.lang[0] === 'sr' ? 'sr' : 'en';
-    } else {
-      lang = params.lang === 'sr' ? 'sr' : 'en';
-    }
-  }
   const messages = getLocaleMessages(lang, 'post');
   const t = (key: string) => (messages as Record<string, string>)[key] ?? key;
   const session = await getServerSession(authOptions);
