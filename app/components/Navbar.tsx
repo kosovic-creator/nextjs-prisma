@@ -14,7 +14,14 @@ export default function Navbar() {
   const { data: session, status } = useSession();
   const { toggle } = useSidebar();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mounted, setMounted] = useState(true);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 0);
+    return () => clearTimeout(timer);
+  }, []);
 
   const currentLang = searchParams.get("lang") === "en" ? "en" : "sr";
   const t = currentLang === "sr" ? sr : en;
@@ -33,6 +40,19 @@ export default function Navbar() {
     params.set("lang", newLang);
   router.push(`${pathname}?${params.toString()}`);
 };
+
+  if (!mounted) {
+    return (
+      <nav className="bg-gray-800 text-white p-4">
+        <div className="flex justify-between items-center">
+          {/* Static content during SSR */}
+          <div className="w-32 h-8 bg-gray-200 animate-pulse rounded"></div>
+        </div>
+      </nav>
+    );
+  }
+
+  const loading = status === 'loading';
 
   return (
     <nav className="bg-gray-800 text-white px-4 py-3">
@@ -79,8 +99,8 @@ export default function Navbar() {
 
         {/* Desktop Auth & Language */}
         <div className="hidden md:flex items-center gap-4">
-          {!mounted || status === "loading" ? (
-            <div className="w-32 h-8" />
+          {loading ? (
+            <div className="w-32 h-8 bg-gray-200 animate-pulse rounded"></div>
           ) : session ? (
             <>
               <span className="font-semibold truncate max-w-[150px]">

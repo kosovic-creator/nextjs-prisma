@@ -43,7 +43,7 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
 ,
-"app/(test)/param/[id]/(pageKlient.tsx)"
+"app/(test)/param/param-server/[id]/(pageKlient.tsx)"
 ],
   "exclude": [
     "node_modules"

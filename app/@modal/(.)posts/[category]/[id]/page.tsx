@@ -109,7 +109,7 @@ export default function PostModal() {
                 </div>
                 <button
                   onClick={handleClose}
-                  className="flex-shrink-0 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                  className="shrink-0 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
                   aria-label="Zatvori"
                 >
                   <svg

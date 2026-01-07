@@ -16,7 +16,10 @@ const nextConfig: NextConfig = {
 //   ]
 // },
 
- cacheComponents: true,
+  compiler: {
+    styledComponents: true,
+  },
+  cacheComponents: true,
   cacheLife: {
     // Override the 'days' profile
     days: {
@@ -25,17 +28,17 @@ const nextConfig: NextConfig = {
       expire: 86400, // 1 day
     },
   },
-async rewrites() {
-  return [
-    {
-      source: '/posts/trans',
-      destination: '/posts',
-    },
-  ]
-},
-env: {
-  customKey: 'my-value',
-},
+  async rewrites() {
+    return [
+      {
+        source: '/posts/trans',
+        destination: '/posts',
+      },
+    ]
+  },
+  env: {
+    customKey: 'my-value',
+  },
   /* config options here */
 };
 
