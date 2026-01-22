@@ -1,17 +1,8 @@
-import React from 'react';
+interface TestDataFormProps {
+    podaci: { id: string; name: string; value: string }[];
+}
 
-type TestDataItem = {
-    id: number;
-    name: string;
-    value: number | null;
-    // Dodaj ostala polja ako ih ima
-};
-
-type Props = {
-    podaci: TestDataItem[];
-};
-
-const TestDataForm: React.FC<Props> = ({ podaci }) => {
+const TestDataForm = ({ podaci }: TestDataFormProps) => {
     return (
         <div>
             {podaci.map(item => (
@@ -22,5 +13,4 @@ const TestDataForm: React.FC<Props> = ({ podaci }) => {
         </div>
     );
 };
-
 export default TestDataForm;
