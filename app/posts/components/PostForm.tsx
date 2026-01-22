@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { postSchema } from "@/zod-schemas";
+import { createOrUpdatePost } from "@/actions/post";
 
 type PostFormProps = {
   initialTitle?: string;
@@ -106,18 +107,16 @@ export default function PostForm({
 
       postSchema(t).parse({ title, content, category });
 
-      const payload: any = { title, content, category, authorId };
-      if (postId) payload.id = postId;
-
-      const res = await fetch("/api/posts", {
-        method: postId ? "PUT" : "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+      const result = await createOrUpdatePost({
+        id: postId,
+        title,
+        content,
+        category,
+        authorId,
       });
 
-      if (!res.ok) {
-        const msg = await res.text();
-        throw new Error(msg || "Request failed");
+      if (!result.success) {
+        throw new Error(result.error || "Request failed");
       }
 
       setShowSuccess(true);

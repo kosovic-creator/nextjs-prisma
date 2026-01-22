@@ -8,6 +8,7 @@ import bcrypt from "bcrypt";
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     EmailProvider({
       server: process.env.EMAIL_SERVER,

@@ -40,10 +40,11 @@ export default async function PostsPage({ searchParams }: Props) {
   const session = await getServerSession(authOptions);
 
   return (
+<>
 
-    <div className="max-w-4xl mx-auto p-4">
+ <div className="max-w-4xl mx-auto p-4">
       <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">{t("posts")}</h1>
+        <h1 className="text-2xl font-bold">{t("posts")}</h1>
 
       </div>
 
@@ -55,17 +56,17 @@ export default async function PostsPage({ searchParams }: Props) {
       )}
 
       <div className="mb-6">
-          <Link href={`/posts/new?lang=${lang}`} className="bg-green-500 text-white px-4 py-2 rounded">{t("create_post")}</Link>
+        <Link href={`/posts/new?lang=${lang}`} className="bg-green-500 text-white px-4 py-2 rounded">{t("create_post")}</Link>
       </div>
       <table className="w-full border-collapse border">
         <thead>
           <tr className="bg-gray-100">
             <th className="border p-2">ID</th>
-              <th className="border p-2">{t("posts")}</th>
-              <th className="border p-2">{t("content")}</th>
+            <th className="border p-2">{t("posts")}</th>
+            <th className="border p-2">{t("content")}</th>
             <th className="border p-2">{t("category")}</th>
-              <th className="border p-2">{t("author")}</th>
-              <th className="border p-2">{t("actions")}</th>
+            <th className="border p-2">{t("author")}</th>
+            <th className="border p-2">{t("actions")}</th>
           </tr>
         </thead>
         <tbody>
@@ -76,26 +77,29 @@ export default async function PostsPage({ searchParams }: Props) {
               </td>
             </tr>
           ) : (
-              posts.map(post => {
-                const categorySlug = encodeURIComponent(post.category ?? "uncategorized");
-                return (
-                  <PostTableRow
-                    key={post.id}
-                    post={post}
-                    categorySlug={categorySlug}
-                    lang={lang}
-                    unknownLabel={t("Unknown")}
-                    editLabel={t("edit_post")}
-                    author={post.author?.name ?? undefined}
-                    showDeleteButton={true}
-                  />
-                );
-              })
+            posts.map(post => {
+              const categorySlug = encodeURIComponent(post.category ?? "uncategorized");
+              return (
+                <PostTableRow
+                  key={post.id}
+                  post={post}
+                  categorySlug={categorySlug}
+                  lang={lang}
+                  unknownLabel={t("Unknown")}
+                  editLabel={t("edit_post")}
+                  author={post.author?.name ?? undefined}
+                  showDeleteButton={true}
+                />
+              );
+            })
           )}
         </tbody>
       </table>
-        {/* <h1>The value of customKey is: {process.env.customKey}</h1> */}
+      {/* <h1>The value of customKey is: {process.env.customKey}</h1> */}
     </div>
+
+</>
+
 
   );
 }

@@ -78,8 +78,8 @@ export default function PostTableRow({
           onClick={(e) => e.stopPropagation()}
         >
           <Link
-            href={`/posts/${categorySlug}/${post.id}?lang=${lang}`}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm font-medium transition-colors"
+            href={`/post/${post.id}?lang=${lang}`}
+            className="bg-gray-600 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm font-medium transition-colors"
           >
             {editLabel}
           </Link>
@@ -143,7 +143,7 @@ export default function PostTableRow({
               onClick={(e) => e.stopPropagation()}
             >
               <Link
-                href={`/posts/${categorySlug}/${post.id}?lang=${lang}`}
+                href={`/post/${post.id}?lang=${lang}`}
                 className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded text-sm font-medium transition-colors flex-1"
               >
                 {editLabel}

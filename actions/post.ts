@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { forbidden, redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../app/api/auth/[...nextauth]/route";
+import { cookies } from "next/headers";
 
 export async function getAllPosts() {
     const posts = await prisma.post.findMany({
@@ -14,21 +15,6 @@ export async function getAllPosts() {
     return posts;
 }
 
-export async function getPostsByCategoryForUser(category: string, userId: number) {
-    const posts = await prisma.post.findMany({
-        where: {
-            authorId: userId,
-            category: {
-                equals: category,
-                mode: "insensitive",
-            },
-        },
-        include: {
-            author: true,
-        },
-    });
-    return posts;
-}
 
 export async function getAllPostsTrans() {
     interface Author {
@@ -42,6 +28,8 @@ export async function getAllPostsTrans() {
         id: number;
         title: string;
         content: string | null;
+        category: string | null;
+        published: boolean;
         authorId: number;
         author: Author;
         // Add other post fields as needed
@@ -88,19 +76,72 @@ export async function updatePostById(id: number, title: string, content: string,
 }
 
 export async function createPost(title: string, content: string, category: string, authorId: number) {
-    const post = await prisma.post.create({
-        data: {
-            title,
-            content,
-            category,
-            authorId,
-        },
+    try {
+        const post = await prisma.post.create({
+            data: {
+                title,
+                content,
+                category,
+                authorId,
+            },
+        });
+        revalidatePath("/posts");
+        return { success: true, post };
+    } catch (error) {
+        return { success: false, error: error instanceof Error ? error.message : "Failed to create post" };
+    }
+}
 
-    });
-    revalidatePath("/posts");
-    redirect("/posts");
-    return post;
+export async function createOrUpdatePost(data: {
+    id?: number;
+    title: string;
+    content: string;
+    category: string;
+    authorId: number;
+}) {
+    try {
+        if (data.id) {
+            // Update existing post
+            const session = await getServerSession(authOptions);
+            const post = await prisma.post.findUnique({
+                where: { id: data.id },
+            });
 
+            if (
+                !session ||
+                !session.user ||
+                !post ||
+                Number(session.user.id) !== post.authorId
+            ) {
+                return { success: false, error: "Unauthorized" };
+            }
+
+            await prisma.post.update({
+                where: { id: data.id },
+                data: {
+                    title: data.title,
+                    content: data.content,
+                    category: data.category,
+                },
+            });
+            revalidatePath("/posts");
+            return { success: true };
+        } else {
+            // Create new post
+            const post = await prisma.post.create({
+                data: {
+                    title: data.title,
+                    content: data.content,
+                    category: data.category,
+                    authorId: data.authorId,
+                },
+            });
+            revalidatePath("/posts");
+            return { success: true, post };
+        }
+    } catch (error) {
+        return { success: false, error: error instanceof Error ? error.message : "Failed to save post" };
+    }
 }
 
 export async function deletePostById(id: number) {

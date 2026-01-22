@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { deletePostById } from "@/actions/post";
+import { Button } from "@/components/ui/button";
 
 type DeleteButtonProps = {
   postId: number;
@@ -30,12 +31,12 @@ export default function DeleteButton({ postId, postTitle, lang }: DeleteButtonPr
 
   return (
     <>
-      <button
+      <Button
         onClick={() => setIsOpen(true)}
         className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
       >
         {t("Delete", "Obriši")}
-      </button>
+      </Button>
 
       {isOpen && (
         <div className="fixed inset-0 bg-opacity-20 backdrop-blur-sm flex items-center justify-center z-50">
