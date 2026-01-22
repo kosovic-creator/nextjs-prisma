@@ -1,6 +1,8 @@
 import React from 'react'
 import { testAction } from '@/actions/test';
-import TestDataForm from './TestDataForm';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import TestDataTable from './components/TestDataTable';
 
 type TestDataItem = {
   id: number;
@@ -10,12 +12,19 @@ type TestDataItem = {
 };
 
 const Page = async () => {
+  try {
+    await testAction();
+
+  } catch (error) {
+    console.error("Error adding test data:", error);
+    redirect('/test-data');
+  }
   const data: TestDataItem[] = await testAction();
-  console.log("Test data:", data);
+
   return (
     <>
-
-      <TestDataForm podaci={data} />
+      <Link className='text-blue-600 hover:text-amber-900' href="/test-data/add">Dodaj test podatke</Link>
+      <TestDataTable podaci={data} />
     </>
   )
 }
