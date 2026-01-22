@@ -1,16 +1,15 @@
 interface TestDataFormProps {
-    podaci: { id: string; name: string; value: string }[];
+    podaci: { id: number; name: string; value: number | null }[];
 }
 
-const TestDataForm = ({ podaci }: TestDataFormProps) => {
-    return (
-        <div>
-            {podaci.map(item => (
-                <div key={item.id}>
-                    {item.name} - {item.value}
-                </div>
-            ))}
+const TestDataForm = ({ podaci }: TestDataFormProps) => (
+    <div>
+        {podaci.map(item => (
+            <div key={item.id}>
+            {item.name} - {item.value !== null ? item.value : ''}
         </div>
-    );
-};
+    ))}
+    </div>
+);
+
 export default TestDataForm;
