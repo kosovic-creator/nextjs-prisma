@@ -38,8 +38,8 @@ export default function Navbar() {
     const newLang = currentLang === "sr" ? "en" : "sr";
     const params = new URLSearchParams(searchParams.toString());
     params.set("lang", newLang);
-  router.push(`${pathname}?${params.toString()}`);
-};
+    router.push(`${pathname}?${params.toString()}`);
+  };
 
   if (!mounted) {
     return (
@@ -82,7 +82,7 @@ export default function Navbar() {
         <div className="hidden md:flex gap-6 items-center flex-1 ml-6">
           <Link href={withLang("/")} className="font-bold text-lg">{t.home}</Link>
           <Link href={withLang("/posts")} className="hover:underline">{t.posts}</Link>
-            <Link href={withLang("/test-data")} className="hover:underline">TestData</Link>
+          <Link href={withLang("/test-data")} className="hover:underline">TestData</Link>
           <div className="relative group">
             <button className="hover:underline focus:outline-none">
               Test
@@ -184,6 +184,13 @@ export default function Navbar() {
             className="block py-2 hover:bg-gray-700 px-3 rounded"
           >
             {t.posts}
+          </Link>
+          <Link
+            href={withLang("/test-data")}
+            onClick={() => setMobileMenuOpen(false)}
+            className="block py-2 hover:bg-gray-700 px-3 rounded"
+          >
+            TestData
           </Link>
           <Link
             href="/trans"

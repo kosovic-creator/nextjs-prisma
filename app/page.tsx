@@ -24,7 +24,7 @@ export default async function Page() {
     <main className="flex flex-col items-center justify-center min-h-screen">
       <h1 className="text-2xl font-bold mb-4">
         NextAuth v7 Demo {safeSession?.user?.email}
-        <Button className="ml-4">Client Dugme Chadcn</Button>
+     
       </h1>
       {/* primjer da se ne može Carusel importovati ovde zbog SSR-a, već samo u klijentskim komponentama */}
       {/* <Karusel /> a onda importovati u serverskoj komponenti */}
