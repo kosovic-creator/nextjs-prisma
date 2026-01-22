@@ -82,6 +82,7 @@ export default function Navbar() {
         <div className="hidden md:flex gap-6 items-center flex-1 ml-6">
           <Link href={withLang("/")} className="font-bold text-lg">{t.home}</Link>
           <Link href={withLang("/posts")} className="hover:underline">{t.posts}</Link>
+            <Link href={withLang("/test-data")} className="hover:underline">TestData</Link>
           <div className="relative group">
             <button className="hover:underline focus:outline-none">
               Test
