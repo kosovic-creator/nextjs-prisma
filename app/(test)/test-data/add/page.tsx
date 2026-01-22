@@ -8,7 +8,6 @@ export default function AddPage() {
         'use server'
         await addTestData(formData);
     };
-
     return (
         <>
             <Link className='text-blue-600 hover:text-blue-900' href="/test-data">Nazad na test podatke</Link>
