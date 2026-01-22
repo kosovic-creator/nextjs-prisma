@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation';
 import prisma from "@/lib/prisma";
 import { request } from "https";
 
@@ -9,15 +10,16 @@ export async function testAction() {
   const test_data = await prisma.testModel.findMany();
   return test_data;
 }
-export async function Add(name: string, value: number | null) {
+export async function addTestData(formData: FormData): Promise<void> {
   // Pristupi ne-keširanim podacima
   await fetch('https://example.com', { cache: 'no-store' });
 
-  const newData = await prisma.testModel.create({
+  await prisma.testModel.create({
     data: {
-      name,
-      value,
+      name: formData.get('name') as string,
+      value: formData.get('value') ? Number(formData.get('value')) : null,
     },
   });
-  return newData;
+
+  redirect('/test-data'); // Ovdje radiš redirect
 }

@@ -1,9 +1,13 @@
-import React from 'react'
+'use client';
+import { Input } from '@/components/ui/input';
+import React from 'react';
 
-function TestDataForm() {
+export default function TestDataForm({ action }: { action: (formData: FormData) => Promise<void> }) {
   return (
-    <div>TestDataForm</div>
-  )
+      <form action={action}>
+          <Input name="name"  />
+          <Input name="value"  />
+          <button type="submit">Pošalji</button>
+      </form>
+  );
 }
-
-export default TestDataForm

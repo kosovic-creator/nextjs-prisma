@@ -1,25 +1,13 @@
 import React from 'react'
 import { testAction } from '@/actions/test';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import TestDataTable from './components/TestDataTable';
+import TestDataTable from './components/TestDataList';
 
-type TestDataItem = {
-  id: number;
-  name: string;
-  value: number | null;
-  // Dodaj ostala polja ako ih ima
-};
+// Dodaj ostala polja ako ih ima
 
 const Page = async () => {
-  try {
-    await testAction();
 
-  } catch (error) {
-    console.error("Error adding test data:", error);
-    redirect('/test-data');
-  }
-  const data: TestDataItem[] = await testAction();
+  const data = await testAction();
 
   return (
     <>
@@ -28,5 +16,4 @@ const Page = async () => {
     </>
   )
 }
-
 export default Page;

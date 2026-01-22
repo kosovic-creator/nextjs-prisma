@@ -1,10 +1,12 @@
-interface TestDataFormProps {
+import { Table } from "@/components/ui/table";
+
+interface TestDataListProps {
     podaci: { id: number; name: string; value: number | null }[];
 }
 
-const TestDataForm = ({ podaci }: TestDataFormProps) => (
+const TestDataList = ({ podaci }: TestDataListProps) => (
     <div>
-        <table className="table-auto border border-gray-300 mb-2">
+        <Table>
             <thead>
                 <tr>
                     <th className="border border-gray-300 px-4 py-2">ID</th>
@@ -21,8 +23,8 @@ const TestDataForm = ({ podaci }: TestDataFormProps) => (
                     </tr>
                 ))}
             </tbody>
-        </table>
+        </Table>
     </div>
 );
 
-export default TestDataForm;
+export default TestDataList;
