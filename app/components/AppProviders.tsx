@@ -1,16 +1,17 @@
 "use client";
-import { Suspense } from "react";
 import { SessionProvider } from "next-auth/react";
 import { SidebarProvider } from "../context/SidebarContext";
+import Navbar from "./Navbar";
+import { Suspense } from "react";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider>
       <SidebarProvider>
-
-        <Suspense fallback={<div>Loading...</div>}>
-          {children}
+        <Suspense fallback={null}>
+          <Navbar />
         </Suspense>
+        {children}
       </SidebarProvider>
     </SessionProvider>
   );

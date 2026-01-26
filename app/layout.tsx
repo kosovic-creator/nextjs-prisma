@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import ClientLayout from "./components/ClientLayout";
-import { SidebarProvider } from "./context/SidebarContext";
-import { Suspense } from "react";
+import AppProviders from "./components/AppProviders";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,13 +20,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  Sidebar,
-  modal,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-  Sidebar: React.ReactNode;
-  modal: React.ReactNode;
-}>) {
+  }) {
   return (
     <html lang="en">
       <head>
@@ -36,23 +30,9 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-gray-900`}>
-        <SidebarProvider>
-          <div className="flex min-h-screen">
-            {Sidebar}
-            <div className="flex-1 flex flex-col w-full">
-              <ClientLayout lang="en">
-                <Suspense fallback={<div className="flex-1 p-4 sm:p-6 lg:p-8">Loading...</div>}>
-                  <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full">
-                    {children}
-                  </main>
-                </Suspense>
-              </ClientLayout>
-              <Suspense fallback={null}>
-                {modal}
-              </Suspense>
-            </div>
-          </div>
-        </SidebarProvider>
+        <AppProviders>
+          {children}
+        </AppProviders>
       </body>
     </html>
   );

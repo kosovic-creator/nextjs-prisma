@@ -1,4 +1,3 @@
-"use client";
 import { SessionProvider } from "next-auth/react";
 import { Suspense } from "react";
 import Navbar from "./Navbar";

@@ -5,7 +5,11 @@ import bcrypt from "bcrypt";
 export async function POST(req: NextRequest) {
   const { email, password, name } = await req.json();
 
-  // Provjeri da li korisnik već postoji...
+  // Proveri da li korisnik već postoji
+  const existingUser = await prisma.user.findUnique({ where: { email } });
+  if (existingUser) {
+    return NextResponse.json({ error: "Korisnik sa tim emailom već postoji" }, { status: 400 });
+  }
 
   // Heširaj password
   const hashedPassword = await bcrypt.hash(password, 10);

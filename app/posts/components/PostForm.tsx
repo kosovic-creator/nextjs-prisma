@@ -106,6 +106,7 @@ export default function PostForm({
       if (!authorId) throw new Error(t("no_author"));
 
       postSchema(t).parse({ title, content, category });
+      console.log("authorId koji se šalje u createOrUpdatePost:", authorId);
 
       const result = await createOrUpdatePost({
         id: postId,

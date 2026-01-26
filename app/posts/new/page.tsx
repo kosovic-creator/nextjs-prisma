@@ -24,7 +24,9 @@ export default async function NewPost({ searchParams }: Props) {
   const t = (key: string) => (messages as Record<string, string>)[key] ?? key;
 
   const session = await getServerSession(authOptions);
+  console.log("Session user id:", session?.user?.id);
   const userId = Number(session?.user?.id ?? 0);
+  console.log("authorId koji se prosleđuje PostForm-u:", userId);
 
   return (
     <div className="max-w-2xl mx-auto p-4">
