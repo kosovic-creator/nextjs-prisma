@@ -82,7 +82,14 @@ export default function Navbar() {
         <div className="hidden md:flex gap-6 items-center flex-1 ml-6">
           <Link href={withLang("/")} className="font-bold text-lg">{t.home}</Link>
           <Link href={withLang("/posts")} className="hover:underline">{t.posts}</Link>
+           <Link
+                href="/crud"
+                className="hover:underline"
+              >
+                Crud
+              </Link>
           <div className="relative group">
+
             <button className="hover:underline focus:outline-none">
               Test
             </button>
@@ -93,12 +100,7 @@ export default function Navbar() {
               >
                 Trans
               </Link>
-              <Link
-                href="/crud"
-                className="block px-4 py-2 hover:bg-gray-200 rounded-t"
-              >
-                Crud
-              </Link>
+
             </div>
           </div>
         </div>
@@ -192,11 +194,11 @@ export default function Navbar() {
           </Link>
 
           <Link
-            href="/trans"
+            href="/crud"
             onClick={() => setMobileMenuOpen(false)}
             className="block py-2 hover:bg-gray-700 px-3 rounded"
           >
-            Trans
+            Crud
           </Link>
 
           <div className="border-t border-gray-700 pt-3 mt-3 space-y-2">

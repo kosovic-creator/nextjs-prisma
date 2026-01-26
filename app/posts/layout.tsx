@@ -8,7 +8,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <SessionProvider>
       <SidebarProvider>
 
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense
+        >
           {children}
         </Suspense>
       </SidebarProvider>
